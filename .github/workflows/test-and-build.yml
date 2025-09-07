@@ -6,6 +6,7 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:  # Allow manual triggering
   pull_request:  # Run on all pull requests
+  push:
 
 jobs:
   test-and-build:
@@ -66,6 +67,10 @@ jobs:
       env:
         CGO_ENABLED: 1
         LD_LIBRARY_PATH: ${{ github.workspace }}/candle-binding/target/release
+
+    - name: run docker-compose
+      run: |
+        docker compose up -d
 
     - name: Upload test artifacts on failure
       if: failure()
