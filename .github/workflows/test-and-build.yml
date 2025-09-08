@@ -6,6 +6,7 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:  # Allow manual triggering
   pull_request:  # Run on all pull requests
+  push:
 
 jobs:
   test-and-build:
@@ -68,7 +69,6 @@ jobs:
         LD_LIBRARY_PATH: ${{ github.workspace }}/candle-binding/target/release
 
     - name: Upload test artifacts on failure
-      if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: test-logs
